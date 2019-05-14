@@ -23,18 +23,18 @@ spec:
         - name: CATALOG_API_HOST
           value: "catalog.coolstore"
         - name: CATALOG_API_PORT
-          value: 8080
+          value: "8080"
         - name: INVENTROY_API_HOST
           value: "inventory.coolstore"
         - name: INVENTROY_API_PORT
-          value: 8080
+          value: "8080"
         - name: DISABLE_CART_DISCOVERY
-          value: false
+          value: "false"
         - name: CART_API_HOST
           value: "cart.coolstore"
         - name: CART_API_PORT
-          value: 8080
+          value: "8080"
         - name: HTTP_PORT
-          value: 8080
+          value: "8080"
         ports:
         - containerPort: 8080
