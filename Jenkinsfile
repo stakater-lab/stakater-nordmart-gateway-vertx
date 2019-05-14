@@ -7,7 +7,7 @@ releaseMavenApp {
     usePersonalAccessToken = true
     tokenCredentialID = 'GithubToken'
     appName = "gateway"
-    mavenGoal = "clean vertx:package"
+    mavenGoal = "clean package vertx:package"
     notifySlack = false
     runIntegrationTest = false
     deployManifest = true
