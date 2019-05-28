@@ -10,8 +10,6 @@ releaseMavenApp {
     mavenGoal = "clean package vertx:package"
     notifySlack = false
     runIntegrationTest = false
-    deployManifest = true
-    namespace = "coolstore"
     dockerRepositoryURL = 'docker.release.stakater.com:443'
     javaRepositoryURL = 'http://nexus.release/repository/maven'
     podVolumes = [
