@@ -15,4 +15,8 @@ releaseApplication {
     tokenCredentialID = 'GithubToken'
     serviceAccount = "jenkins"
     dockerRepositoryURL = 'docker.delivery.stackator.com:443'
+    javaRepositoryURL = 'https://nexus.delivery.stackator.com/repository/maven'
+    podVolumes = [
+        isMaven: true
+    ]
 }
