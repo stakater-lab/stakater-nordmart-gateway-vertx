@@ -13,6 +13,6 @@ releaseApplication {
     usePersonalAccessToken = true
     tokenCredentialID = 'GithubToken'
     serviceAccount = "jenkins"
-    dockerRepositoryURL = 'docker.release.stakater.com:443'
-    javaRepositoryURL = 'http://nexus.release.stakater.com/repository/maven'
+    dockerRepositoryURL = 'docker.delivery.stackator.com:443'
+    javaRepositoryURL = 'http://nexus.delivery.stackator.com/repository/maven'
 }
