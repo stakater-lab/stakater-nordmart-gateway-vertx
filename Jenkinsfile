@@ -4,7 +4,6 @@
 releaseApplication {
     appName = "gateway"
     appType = "maven"
-    isMaven = true
     builderImage = "stakater/builder-maven:3.5.4-jdk1.8-v2.0.1-v0.0.6"
     goal = "clean package vertx:package"
     notifySlack = false
@@ -14,9 +13,5 @@ releaseApplication {
     usePersonalAccessToken = true
     tokenCredentialID = 'GithubToken'
     serviceAccount = "jenkins"
-    dockerRepositoryURL = 'docker.delivery.stackator.com:443'
-    javaRepositoryURL = 'https://nexus.delivery.stackator.com/repository/maven'
-    podVolumes = [
-        isMaven: true
-    ]
+    dockerRepositoryURL = 'docker.delivery.stackator.com:443'    
 }
