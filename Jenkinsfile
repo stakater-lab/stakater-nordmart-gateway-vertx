@@ -1,10 +1,10 @@
 #!/usr/bin/env groovy
-@Library('github.com/stakater/stakater-pipeline-library@v2.16.3') _
+@Library('github.com/stakater/stakater-pipeline-library@v2.16.11') _
 
 releaseApplication {
     appName = "gateway"
     appType = "maven"
-    builderImage = "stakater/builder-maven:3.5.4-jdk1.8-v2.0.1-v0.0.6"
+    builderImage = "stakater/builder-maven:3.5.4-jdk1.8-apline8-v0.0.3"
     goal = "clean package vertx:package"
     notifySlack = false
     runIntegrationTest = false
@@ -13,5 +13,5 @@ releaseApplication {
     usePersonalAccessToken = true
     tokenCredentialID = 'GithubToken'
     serviceAccount = "jenkins"
-    dockerRepositoryURL = 'docker.delivery.stackator.com:443'    
+    dockerRepositoryURL = 'docker-delivery.workshop.stakater.com:443'
 }
