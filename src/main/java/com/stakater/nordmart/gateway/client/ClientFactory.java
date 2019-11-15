@@ -39,6 +39,14 @@ public class ClientFactory
                 .setDefaultPort(config.getInventoryAddress().getPort())));
     }
 
+    public Single<WebClient> getReviewClient() {
+        return HttpEndpoint.rxGetWebClient(discovery,
+                rec -> rec.getName().equals("review"))
+                .onErrorReturn(t -> WebClient.create(vertx, new WebClientOptions()
+                        .setDefaultHost(config.getReviewAddress().getHost())
+                        .setDefaultPort(config.getReviewAddress().getPort())));
+    }
+
     public Single<WebClient> getCartClient() {
         // Cart lookup
         Single<WebClient> cartDiscoveryRequest;
