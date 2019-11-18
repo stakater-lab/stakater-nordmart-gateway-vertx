@@ -15,31 +15,17 @@ public class ReviewHandler extends NordmartHandler
 {
     private static final Logger LOG = LoggerFactory.getLogger(ReviewHandler.class);
 
-    /*public void getReviews(RoutingContext rc)
+    public void getReviews(RoutingContext rc)
     {
         String productId = rc.request().getParam("productId");
 
         circuit.executeWithFallback(
                 future -> {
-                    client.get("/api/review/" + productId).as(BodyCodec.jsonObject())
+                    client.get("/api/review/" + productId).as(BodyCodec.jsonArray())
                             .send(ar -> {
-                                handleResponse(ar, rc, future);
+                                handleGetResponse(ar, rc, future);
                             });
-                }, v -> new JsonObject());
-    }*/
-
-    public void getReviews(RoutingContext rc)
-    {
-        String productId = rc.request().getParam("productId");
-        // Retrieve reviews
-        client.get("/api/review/" + productId).as(BodyCodec.jsonArray()).rxSend()
-                .map(resp -> {
-                    if (resp.statusCode() != 200)
-                    {
-                        throw new RuntimeException("Invalid response from the review service: " + resp.statusCode());
-                    }
-                    return resp.body();
-                });
+                }, v -> new JsonArray());
     }
 
     public void addReview(RoutingContext rc)
@@ -85,6 +71,22 @@ public class ReviewHandler extends NordmartHandler
         else
         {
             rc.response().end(new JsonObject().toString());
+            future.fail(response.cause());
+        }
+    }
+
+
+    private void handleGetResponse(AsyncResult<HttpResponse<JsonArray>> response, RoutingContext rc, Future<JsonArray>
+            future)
+    {
+        if (response.succeeded())
+        {
+            rc.response().end(response.result().body().toString());
+            future.complete();
+        }
+        else
+        {
+            rc.response().end(new JsonArray().toString());
             future.fail(response.cause());
         }
     }
