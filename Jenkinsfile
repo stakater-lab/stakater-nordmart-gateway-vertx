@@ -14,4 +14,7 @@ releaseApplication {
     tokenCredentialID = 'GithubToken'
     serviceAccount = "jenkins"
     dockerRepositoryURL = 'docker-delivery.cp-stakater.com:443'
+    // configuration parameter for e2e tess
+    e2eTestJob = "true"
+    e2eJobName = "../stakater-nordmart-e2e-tests/master"
 }
