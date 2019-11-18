@@ -2,7 +2,6 @@ package com.stakater.nordmart.gateway.handler;
 
 import io.vertx.core.AsyncResult;
 import io.vertx.core.json.Json;
-import io.vertx.core.json.JsonArray;
 import io.vertx.core.json.JsonObject;
 import io.vertx.rxjava.core.Future;
 import io.vertx.rxjava.ext.web.RoutingContext;
@@ -21,11 +20,11 @@ public class ReviewHandler extends NordmartHandler
 
         circuit.executeWithFallback(
                 future -> {
-                    client.get("/api/review/" + productId).as(BodyCodec.jsonArray())
+                    client.get("/api/review/" + productId).as(BodyCodec.jsonObject())
                             .send(ar -> {
-                                handleGetResponse(ar, rc, future);
+                                handleResponse(ar, rc, future);
                             });
-                }, v -> new JsonArray());
+                }, v -> new JsonObject());
     }
 
     public void addReview(RoutingContext rc)
@@ -71,22 +70,6 @@ public class ReviewHandler extends NordmartHandler
         else
         {
             rc.response().end(new JsonObject().toString());
-            future.fail(response.cause());
-        }
-    }
-
-
-    private void handleGetResponse(AsyncResult<HttpResponse<JsonArray>> response, RoutingContext rc, Future<JsonArray>
-            future)
-    {
-        if (response.succeeded())
-        {
-            rc.response().end(response.result().body().toString());
-            future.complete();
-        }
-        else
-        {
-            rc.response().end(new JsonArray().toString());
             future.fail(response.cause());
         }
     }
