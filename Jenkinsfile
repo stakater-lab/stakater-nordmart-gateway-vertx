@@ -1,5 +1,5 @@
 #!/usr/bin/env groovy
-@Library('github.com/stakater/stakater-pipeline-library@v2.16.12') _
+@Library('github.com/stakater/stakater-pipeline-library@v2.16.14') _
 
 releaseApplication {
     appName = "gateway"
