@@ -2,6 +2,7 @@ package com.stakater.nordmart.gateway.handler;
 
 import io.vertx.core.AsyncResult;
 import io.vertx.core.json.Json;
+import io.vertx.core.json.JsonArray;
 import io.vertx.core.json.JsonObject;
 import io.vertx.rxjava.core.Future;
 import io.vertx.rxjava.ext.web.RoutingContext;
@@ -14,7 +15,7 @@ public class ReviewHandler extends NordmartHandler
 {
     private static final Logger LOG = LoggerFactory.getLogger(ReviewHandler.class);
 
-    public void getReviews(RoutingContext rc)
+    /*public void getReviews(RoutingContext rc)
     {
         String productId = rc.request().getParam("productId");
 
@@ -25,6 +26,20 @@ public class ReviewHandler extends NordmartHandler
                                 handleResponse(ar, rc, future);
                             });
                 }, v -> new JsonObject());
+    }*/
+
+    public void getReviews(RoutingContext rc)
+    {
+        String productId = rc.request().getParam("productId");
+        // Retrieve reviews
+        client.get("/api/review/" + productId).as(BodyCodec.jsonArray()).rxSend()
+                .map(resp -> {
+                    if (resp.statusCode() != 200)
+                    {
+                        throw new RuntimeException("Invalid response from the review service: " + resp.statusCode());
+                    }
+                    return resp.body();
+                });
     }
 
     public void addReview(RoutingContext rc)
