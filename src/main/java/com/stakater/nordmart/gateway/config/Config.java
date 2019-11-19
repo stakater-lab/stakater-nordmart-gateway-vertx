@@ -5,6 +5,7 @@ public class Config
     private Address catalogAddress;
     private Address inventoryAddress;
     private Address cartAddress;
+    private Address reviewAddress;
     private Integer serverPort;
     private Boolean disableCartDiscovery;
 
@@ -18,6 +19,9 @@ public class Config
 
         config.inventoryAddress = new Address(System.getenv("INVENTORY_API_HOST"),
             System.getenv("INVENTORY_API_PORT"));
+
+        config.reviewAddress = new Address(System.getenv("REVIEW_API_HOST"),
+                System.getenv("REVIEW_API_PORT"));
 
         try
         {
@@ -46,6 +50,8 @@ public class Config
     {
         return cartAddress;
     }
+
+    public Address getReviewAddress() { return reviewAddress; }
 
     public Integer getServerPort()
     {

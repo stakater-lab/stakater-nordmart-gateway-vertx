@@ -5,6 +5,7 @@ import com.stakater.nordmart.gateway.client.ClientFactory;
 import com.stakater.nordmart.gateway.config.Config;
 import com.stakater.nordmart.gateway.handler.CartHandler;
 import com.stakater.nordmart.gateway.handler.ProductHandler;
+import com.stakater.nordmart.gateway.handler.ReviewHandler;
 import com.stakater.nordmart.gateway.router.NordmartRouter;
 import io.vertx.circuitbreaker.CircuitBreakerOptions;
 import io.vertx.rxjava.circuitbreaker.CircuitBreaker;
@@ -17,6 +18,7 @@ public class GatewayVerticle extends AbstractVerticle
 {
     private final ProductHandler productHandler = new ProductHandler();
     private final CartHandler cartHandler = new CartHandler();
+    private final ReviewHandler reviewHandler = new ReviewHandler();
 
     @Override
     public void start()
@@ -32,18 +34,20 @@ public class GatewayVerticle extends AbstractVerticle
 
         productHandler.setCircuit(circuit);
         cartHandler.setCircuit(circuit);
+        reviewHandler.setCircuit(circuit);
 
-        Router router = new NordmartRouter(vertx, productHandler, cartHandler).getRouter();
+        Router router = new NordmartRouter(vertx, productHandler, cartHandler, reviewHandler).getRouter();
 
         ServiceDiscovery.create(vertx, discovery -> {
             ClientFactory clientFactory = new ClientFactory(discovery, vertx, config);
-            // Zip all 3 requests
+            // Zip all 4 requests
             Single.zip(clientFactory.getCatalogClient(), clientFactory.getInventoryClient(),
-                clientFactory.getCartClient(), (c, i, ct) -> {
+                clientFactory.getCartClient(), clientFactory.getReviewClient(), (c, i, ct, r) -> {
                 // When everything is done
                 productHandler.setClient(c);
                 productHandler.inventoryHandler.setClient(i);
                 cartHandler.setClient(ct);
+                reviewHandler.setClient(r);
                 return vertx.createHttpServer()
                     .requestHandler(router::accept)
                     .listen(config.getServerPort());
