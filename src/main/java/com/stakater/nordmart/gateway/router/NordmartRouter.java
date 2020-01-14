@@ -3,6 +3,7 @@ package com.stakater.nordmart.gateway.router;
 import com.stakater.nordmart.gateway.handler.CartHandler;
 import com.stakater.nordmart.gateway.handler.ProductHandler;
 import com.stakater.nordmart.gateway.handler.ReviewHandler;
+import com.stakater.nordmart.gateway.tracing.TracingInterceptor;
 import io.vertx.core.AbstractVerticle;
 import io.vertx.core.http.HttpMethod;
 import io.vertx.core.json.JsonObject;
@@ -33,6 +34,7 @@ public class NordmartRouter
             .allowedHeader("x-b3-flags")
             .allowedHeader("x-ot-span-context"));
 
+        router.route().handler(TracingInterceptor.create());
 
         router.get("/health").handler(ctx -> ctx.response().end(new JsonObject().put("status", "UP").toString()));
         router.get("/api/products").handler(productHandler::products);

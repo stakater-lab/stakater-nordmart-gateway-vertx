@@ -1,5 +1,6 @@
 package com.stakater.nordmart.gateway.handler;
 
+import com.stakater.nordmart.gateway.tracing.TracingInterceptor;
 import io.vertx.core.AsyncResult;
 import io.vertx.core.json.Json;
 import io.vertx.core.json.JsonObject;
@@ -20,7 +21,8 @@ public class ReviewHandler extends NordmartHandler
 
         circuit.executeWithFallback(
                 future -> {
-                    client.get("/api/review/" + productId).as(BodyCodec.jsonObject())
+                    TracingInterceptor.propagate(client, rc)
+                        .get("/api/review/" + productId).as(BodyCodec.jsonObject())
                             .send(ar -> {
                                 handleResponse(ar, rc, future);
                             });
@@ -37,7 +39,8 @@ public class ReviewHandler extends NordmartHandler
 
         circuit.executeWithFallback(
             future -> {
-                client.post("/api/review/" + productId + "/" + customerName + "/" + rating + "/" + text)
+                TracingInterceptor.propagate(client, rc)
+                    .post("/api/review/" + productId + "/" + customerName + "/" + rating + "/" + text)
                     .as(BodyCodec.jsonObject())
                     .send(ar -> {
                         handleResponse(ar, rc, future);
@@ -51,7 +54,8 @@ public class ReviewHandler extends NordmartHandler
 
         circuit.executeWithFallback(
             future -> {
-                client.delete("/api/review/" + reviewId)
+                TracingInterceptor.propagate(client, rc)
+                    .delete("/api/review/" + reviewId)
                     .as(BodyCodec.jsonObject())
                     .send(ar -> {
                         handleResponse(ar, rc, future);

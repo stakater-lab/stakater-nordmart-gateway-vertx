@@ -1,5 +1,6 @@
 package com.stakater.nordmart.gateway.handler;
 
+import com.stakater.nordmart.gateway.tracing.TracingInterceptor;
 import io.vertx.core.json.Json;
 import io.vertx.core.json.JsonObject;
 import io.vertx.rxjava.circuitbreaker.CircuitBreaker;
@@ -17,7 +18,8 @@ public class ProductHandler extends NordmartHandler
     public void products(RoutingContext rc)
     {
         // Retrieve catalog
-        client.get("/api/products").as(BodyCodec.jsonArray()).rxSend()
+        TracingInterceptor.propagate(client, rc)
+            .get("/api/products").as(BodyCodec.jsonArray()).rxSend()
             .map(resp -> {
                 if (resp.statusCode() != 200)
                 {

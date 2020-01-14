@@ -10,9 +10,12 @@
     <name>Nordmart Gateway Service</name>
     <description>Nordmart Gateway Service with Eclipse Vert.x</description>
     <properties>
-        <vertx.version>3.4.2</vertx.version>
+        <vertx.version>3.6.2</vertx.version>
         <vertx-maven-plugin.version>1.0.8</vertx-maven-plugin.version>
         <vertx.verticle>com.stakater.nordmart.gateway.GatewayVerticle</vertx.verticle>
+        <version.opentracing>0.32.0</version.opentracing>
+        <version.opentracing.spring>0.3.2</version.opentracing.spring>
+        <version.jaeger>0.35.2</version.jaeger>
         <slf4j.version>1.7.25</slf4j.version>
     </properties>
     <dependencyManagement>
@@ -64,6 +67,26 @@
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-jdk14</artifactId>
             <version>${slf4j.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>io.opentracing.contrib</groupId>
+            <artifactId>opentracing-vertx-web</artifactId>
+            <version>0.1.0</version>
+        </dependency>
+        <dependency>
+            <groupId>io.opentracing</groupId>
+            <artifactId>opentracing-api</artifactId>
+            <version>${version.opentracing}</version>
+        </dependency>
+        <dependency>
+            <groupId>io.jaegertracing</groupId>
+            <artifactId>jaeger-core</artifactId>
+            <version>${version.jaeger}</version>
+        </dependency>
+        <dependency>
+            <groupId>io.jaegertracing</groupId>
+            <artifactId>jaeger-client</artifactId>
+            <version>${version.jaeger}</version>
         </dependency>
     </dependencies>
     <build>

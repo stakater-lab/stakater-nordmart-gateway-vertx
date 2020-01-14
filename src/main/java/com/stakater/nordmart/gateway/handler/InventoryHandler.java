@@ -20,8 +20,8 @@ public class InventoryHandler extends NordmartHandler
             .flatMapSingle(product ->
                 circuit.rxExecuteCommandWithFallback(
                     future ->
-                        client.get("/api/inventory/" + product.getString("itemId"))
-                            .as(BodyCodec.jsonObject())
+                            client.get("/api/inventory/" + product.getString("itemId"))
+                                    .as(BodyCodec.jsonObject())
                             .rxSend()
                             .map(resp -> {
                                 if (resp.statusCode() != 200)
