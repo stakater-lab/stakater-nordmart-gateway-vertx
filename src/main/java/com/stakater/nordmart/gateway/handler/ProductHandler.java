@@ -3,6 +3,7 @@ package com.stakater.nordmart.gateway.handler;
 import io.vertx.core.json.Json;
 import io.vertx.core.json.JsonObject;
 import io.vertx.rxjava.circuitbreaker.CircuitBreaker;
+import io.vertx.rxjava.core.http.HttpServerRequest;
 import io.vertx.rxjava.ext.web.RoutingContext;
 import io.vertx.rxjava.ext.web.codec.BodyCodec;
 import org.slf4j.Logger;
@@ -16,8 +17,10 @@ public class ProductHandler extends NordmartHandler
 
     public void products(RoutingContext rc)
     {
+        HttpServerRequest request = rc.request();
         // Retrieve catalog
-        client.get("/api/products").as(BodyCodec.jsonArray()).rxSend()
+        client.get("/api/products").putHeader("authorization",request.getHeader("authorization"))
+            .as(BodyCodec.jsonArray()).rxSend()
             .map(resp -> {
                 if (resp.statusCode() != 200)
                 {

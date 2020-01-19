@@ -3,6 +3,7 @@ package com.stakater.nordmart.gateway.handler;
 import io.vertx.core.AsyncResult;
 import io.vertx.core.json.JsonObject;
 import io.vertx.rxjava.core.Future;
+import io.vertx.rxjava.core.http.HttpServerRequest;
 import io.vertx.rxjava.ext.web.RoutingContext;
 import io.vertx.rxjava.ext.web.client.HttpResponse;
 import io.vertx.rxjava.ext.web.codec.BodyCodec;
@@ -15,11 +16,14 @@ public class CartHandler extends NordmartHandler
 
     public void getCart(RoutingContext rc)
     {
-        String cartId = rc.request().getParam("cartId");
+        HttpServerRequest request = rc.request();
+        String cartId = request.getParam("cartId");
+        String authorization = request.getHeader("authorization");
 
         circuit.executeWithFallback(
             future -> {
-                client.get("/api/cart/" + cartId).as(BodyCodec.jsonObject())
+                client.get("/api/cart/" + cartId).putHeader("authorization", authorization)
+                    .as(BodyCodec.jsonObject())
                     .send(ar -> {
                         handleResponse(ar, rc, future);
                     });

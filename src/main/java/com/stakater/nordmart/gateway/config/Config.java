@@ -3,6 +3,7 @@ package com.stakater.nordmart.gateway.config;
 public class Config
 {
     private Address catalogAddress;
+    private Address customerAddress;
     private Address inventoryAddress;
     private Address cartAddress;
     private Address reviewAddress;
@@ -23,6 +24,9 @@ public class Config
         config.reviewAddress = new Address(System.getenv("REVIEW_API_HOST"),
                 System.getenv("REVIEW_API_PORT"));
 
+        config.customerAddress = new Address(System.getenv("CUSTOMER_API_HOST"),
+                System.getenv("CUSTOMER_API_PORT"));
+
         try
         {
             config.serverPort = Integer.parseInt(System.getenv("HTTP_PORT"));
@@ -39,6 +43,10 @@ public class Config
     public Address getCatalogAddress()
     {
         return catalogAddress;
+    }
+
+    public Address getCustomerAddress() {
+        return customerAddress;
     }
 
     public Address getInventoryAddress()
