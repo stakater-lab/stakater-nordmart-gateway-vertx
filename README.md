@@ -46,7 +46,7 @@ To deploy app inside a docker container
 * Finally run the image by executing
 
   ```bash
-  docker run -d --name gateway --network nordmart-apps -p 8083:8080 -e CART_API_HOST=cart -e CART_API_PORT=8082 -e CATALOG_API_HOST=catalog -e CATALOG_API_PORT=8080 -e INVENTORY_API_HOST=inventory -e INVENTORY_API_PORT=8081 -e HTTP_PORT=8080 -e DISABLE_CART_DISCOVERY=false gateway
+  docker run -d --name gateway --network nordmart-apps -p 8083:8080 -e CART_API_HOST=cart -e CART_API_PORT=8082 -e CATALOG_API_HOST=catalog -e CATALOG_API_PORT=8080 -e INVENTORY_API_HOST=inventory -e INVENTORY_API_PORT=8081 -e PRODUCT_SEARCH_API_HOST=search -e PRODUCT_SEARCH_API_PORT=8084 -e HTTP_PORT=8080 -e DISABLE_CART_DISCOVERY=false gateway
   ```
 
 ### Helm Charts
