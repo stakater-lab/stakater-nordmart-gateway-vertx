@@ -16,7 +16,7 @@ public class TracingAspect {
     @Autowired
     Tracer tracer;
 
-    @Around("@annotation(com.stakater.nordmart.catalog.tracing.Traced)")
+    @Around("@annotation(com.stakater.nordmart.gateway.tracing.Traced)")
     public Object aroundAdvice(ProceedingJoinPoint jp) throws Throwable {
         String class_name = jp.getTarget().getClass().getName();
         String method_name = jp.getSignature().getName();

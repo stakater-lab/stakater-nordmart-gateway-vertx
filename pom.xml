@@ -93,6 +93,11 @@
             <artifactId>zipkin-sender-okhttp3</artifactId>
             <version>0.10.0</version>
         </dependency>
+        <dependency>
+            <groupId>io.vertx</groupId>
+            <artifactId>vertx-opentracing</artifactId>
+            <version>4.0.0-milestone4</version>
+        </dependency>
     </dependencies>
     <build>
         <plugins>

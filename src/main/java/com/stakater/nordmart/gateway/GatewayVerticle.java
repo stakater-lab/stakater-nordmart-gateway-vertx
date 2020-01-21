@@ -12,8 +12,10 @@ import io.vertx.rxjava.circuitbreaker.CircuitBreaker;
 import io.vertx.rxjava.core.AbstractVerticle;
 import io.vertx.rxjava.ext.web.Router;
 import io.vertx.rxjava.servicediscovery.ServiceDiscovery;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
 import rx.Single;
 
+@SpringBootApplication
 public class GatewayVerticle extends AbstractVerticle
 {
     private final ProductHandler productHandler = new ProductHandler();
