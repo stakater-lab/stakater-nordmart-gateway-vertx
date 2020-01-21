@@ -1,5 +1,6 @@
 package com.stakater.nordmart.gateway.handler;
 
+import com.stakater.nordmart.gateway.tracing.Traced;
 import com.stakater.nordmart.gateway.tracing.TracingInterceptor;
 import io.vertx.core.json.Json;
 import io.vertx.core.json.JsonObject;
@@ -15,6 +16,7 @@ public class ProductHandler extends NordmartHandler
 
     public final InventoryHandler inventoryHandler = new InventoryHandler();
 
+    @Traced
     public void products(RoutingContext rc)
     {
         // Retrieve catalog

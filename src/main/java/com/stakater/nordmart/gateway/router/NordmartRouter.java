@@ -3,6 +3,7 @@ package com.stakater.nordmart.gateway.router;
 import com.stakater.nordmart.gateway.handler.CartHandler;
 import com.stakater.nordmart.gateway.handler.ProductHandler;
 import com.stakater.nordmart.gateway.handler.ReviewHandler;
+import com.stakater.nordmart.gateway.tracing.Traced;
 import com.stakater.nordmart.gateway.tracing.TracingInterceptor;
 import io.vertx.core.AbstractVerticle;
 import io.vertx.core.http.HttpMethod;

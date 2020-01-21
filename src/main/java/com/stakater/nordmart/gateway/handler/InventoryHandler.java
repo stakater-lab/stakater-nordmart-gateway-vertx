@@ -1,5 +1,6 @@
 package com.stakater.nordmart.gateway.handler;
 
+import com.stakater.nordmart.gateway.tracing.Traced;
 import io.vertx.core.json.JsonArray;
 import io.vertx.core.json.JsonObject;
 import io.vertx.rxjava.ext.web.codec.BodyCodec;
@@ -13,6 +14,7 @@ public class InventoryHandler extends NordmartHandler
 {
     private static final Logger LOG = LoggerFactory.getLogger(InventoryHandler.class);
 
+    @Traced
     public Single<List<JsonObject>> updateInventory(JsonArray products)
     {
         return Observable.from(products)
@@ -42,6 +44,7 @@ public class InventoryHandler extends NordmartHandler
             .toList().toSingle();
     }
 
+    @Traced
     private JsonObject setAvailability(JsonObject product, int quantity)
     {
         return product.put("availability", new JsonObject().put("quantity", quantity));

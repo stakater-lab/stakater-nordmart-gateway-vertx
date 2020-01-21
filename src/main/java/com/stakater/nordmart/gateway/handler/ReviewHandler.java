@@ -1,5 +1,6 @@
 package com.stakater.nordmart.gateway.handler;
 
+import com.stakater.nordmart.gateway.tracing.Traced;
 import com.stakater.nordmart.gateway.tracing.TracingInterceptor;
 import io.vertx.core.AsyncResult;
 import io.vertx.core.json.Json;
@@ -15,6 +16,7 @@ public class ReviewHandler extends NordmartHandler
 {
     private static final Logger LOG = LoggerFactory.getLogger(ReviewHandler.class);
 
+    @Traced
     public void getReviews(RoutingContext rc)
     {
         String productId = rc.request().getParam("productId");
@@ -29,6 +31,7 @@ public class ReviewHandler extends NordmartHandler
                 }, v -> new JsonObject());
     }
 
+    @Traced
     public void addReview(RoutingContext rc)
     {
 
@@ -48,6 +51,7 @@ public class ReviewHandler extends NordmartHandler
             }, v -> new JsonObject());
     }
 
+    @Traced
     public void deleteReview(RoutingContext rc)
     {
         String reviewId = rc.request().getParam("reviewId");
