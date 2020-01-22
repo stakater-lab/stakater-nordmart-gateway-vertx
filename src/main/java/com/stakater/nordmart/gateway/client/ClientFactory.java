@@ -49,7 +49,7 @@ public class ClientFactory
 
     public Single<WebClient> getProductSearch() {
         return HttpEndpoint.rxGetWebClient(discovery,
-                rec -> rec.getName().equals("product-search"))
+                rec -> rec.getName().equals("search"))
                 .onErrorReturn(t -> WebClient.create(vertx, new WebClientOptions()
                         .setDefaultHost(config.getProductSearchAddress().getHost())
                         .setDefaultPort(config.getProductSearchAddress().getPort())));

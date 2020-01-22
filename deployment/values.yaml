@@ -21,6 +21,10 @@ deployment:
     value: "cart.nordmart-store"
   - name: CART_API_PORT
     value: "8080"
+  - name: PRODUCT_SEARCH_API_HOST
+    value: "search.nordmart-dev-apps"
+  - name: PRODUCT_SEARCH_API_PORT
+    value: "8080"
   - name: HTTP_PORT
     value: "8080"
 rbac:
