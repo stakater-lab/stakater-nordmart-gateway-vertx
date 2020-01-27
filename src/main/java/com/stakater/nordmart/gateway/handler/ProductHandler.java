@@ -19,7 +19,7 @@ public class ProductHandler extends NordmartHandler
     {
         HttpServerRequest request = rc.request();
         // Retrieve catalog
-        client.get("/api/products").putHeader("authorization",request.getHeader("authorization"))
+        getWithAuth("/api/products", request.getHeader("authorization"))
             .as(BodyCodec.jsonArray()).rxSend()
             .map(resp -> {
                 if (resp.statusCode() != 200)

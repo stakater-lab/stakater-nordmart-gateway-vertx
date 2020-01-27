@@ -22,7 +22,7 @@ public class CartHandler extends NordmartHandler
 
         circuit.executeWithFallback(
             future -> {
-                client.get("/api/cart/" + cartId).putHeader("authorization", authorization)
+                getWithAuth("/api/cart/" + cartId, authorization)
                     .as(BodyCodec.jsonObject())
                     .send(ar -> {
                         handleResponse(ar, rc, future);
@@ -35,10 +35,11 @@ public class CartHandler extends NordmartHandler
         String cartId = rc.request().getParam("cartId");
         String itemId = rc.request().getParam("itemId");
         String quantity = rc.request().getParam("quantity");
+        String authorization = rc.request().getHeader("authorization");
 
         circuit.executeWithFallback(
             future -> {
-                client.post("/api/cart/" + cartId + "/" + itemId + "/" + quantity)
+                postWithAuth("/api/cart/" + cartId + "/" + itemId + "/" + quantity, authorization)
                     .as(BodyCodec.jsonObject())
                     .send(ar -> {
                         handleResponse(ar, rc, future);
@@ -51,10 +52,11 @@ public class CartHandler extends NordmartHandler
         String cartId = rc.request().getParam("cartId");
         String itemId = rc.request().getParam("itemId");
         String quantity = rc.request().getParam("quantity");
+        String authorization = rc.request().getHeader("authorization");
 
         circuit.executeWithFallback(
             future -> {
-                client.delete("/api/cart/" + cartId + "/" + itemId + "/" + quantity)
+                deleteWithAuth("/api/cart/" + cartId + "/" + itemId + "/" + quantity, authorization)
                     .as(BodyCodec.jsonObject())
                     .send(ar -> {
                         handleResponse(ar, rc, future);
