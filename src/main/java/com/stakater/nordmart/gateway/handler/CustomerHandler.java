@@ -24,12 +24,9 @@ public class CustomerHandler extends NordmartHandler {
 
         circuit.executeWithFallback(
                 future -> {
-                    HttpRequest<Buffer> getRequest = getWithAuth("/api/customers/search", authorization);
-                    if (customerEmail != null && !customerEmail.trim().equals("")) {
-                        LOG.warn("Email parameter is empty");
-                        getRequest = getRequest.addQueryParam("email", customerEmail);
-                    }
-                    getRequest.as(BodyCodec.jsonObject()).rxSend()
+                    getWithAuth("/api/customers/search", authorization)
+                            .addQueryParam("email", customerEmail != null ? customerEmail : "")
+                            .as(BodyCodec.jsonObject()).rxSend()
                             .subscribe(resp -> onSuccess(rc, future, resp), error -> onError(rc, future, error));
                 }
                 , v -> new JsonObject());
