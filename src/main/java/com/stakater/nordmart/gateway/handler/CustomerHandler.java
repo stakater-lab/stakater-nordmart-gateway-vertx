@@ -3,10 +3,8 @@ package com.stakater.nordmart.gateway.handler;
 import io.vertx.core.json.Json;
 import io.vertx.core.json.JsonObject;
 import io.vertx.rxjava.core.Future;
-import io.vertx.rxjava.core.buffer.Buffer;
 import io.vertx.rxjava.core.http.HttpServerRequest;
 import io.vertx.rxjava.ext.web.RoutingContext;
-import io.vertx.rxjava.ext.web.client.HttpRequest;
 import io.vertx.rxjava.ext.web.client.HttpResponse;
 import io.vertx.rxjava.ext.web.codec.BodyCodec;
 import org.slf4j.Logger;
@@ -67,7 +65,7 @@ public class CustomerHandler extends NordmartHandler {
 
     private void onSuccess(RoutingContext rc, Future<JsonObject> future, HttpResponse<JsonObject> resp) {
         LOG.info("Customer success response : {}", resp.statusCode());
-        rc.response().end(Json.encodePrettily(resp.body()));
+        rc.response().setStatusCode(resp.statusCode()).end(Json.encodePrettily(resp.body()));
         future.complete();
     }
 

@@ -18,11 +18,10 @@ public class CartHandler extends NordmartHandler
     {
         HttpServerRequest request = rc.request();
         String cartId = request.getParam("cartId");
-        String authorization = request.getHeader("authorization");
 
         circuit.executeWithFallback(
             future -> {
-                getWithAuth("/api/cart/" + cartId, authorization)
+                client.get("/api/cart/" + cartId)
                     .as(BodyCodec.jsonObject())
                     .send(ar -> {
                         handleResponse(ar, rc, future);
@@ -30,16 +29,43 @@ public class CartHandler extends NordmartHandler
             }, v -> new JsonObject());
     }
 
+    public void checkout(RoutingContext rc) {
+        HttpServerRequest request = rc.request();
+        String cartId = request.getParam("cartId");
+        String authorization = rc.request().getHeader("authorization");
+
+        circuit.executeWithFallback(
+                future -> postWithAuth("/api/cart/checkout/" + cartId, authorization)
+                        .as(BodyCodec.jsonObject())
+                        .send(ar -> {
+                            handleResponse(ar, rc, future);
+                        })
+                , v -> new JsonObject());
+    }
+
+    public void setCart(RoutingContext rc) {
+        HttpServerRequest request = rc.request();
+        String cartId = request.getParam("cartId");
+        String tmpId = request.getParam("tmpId");
+
+        circuit.executeWithFallback(
+                future -> client.post("/api/cart/" + cartId + "/" + tmpId)
+                                .as(BodyCodec.jsonObject())
+                                .send(ar -> {
+                                    handleResponse(ar, rc, future);
+                                })
+                , v -> new JsonObject());
+    }
+
     public void addToCart(RoutingContext rc)
     {
         String cartId = rc.request().getParam("cartId");
         String itemId = rc.request().getParam("itemId");
         String quantity = rc.request().getParam("quantity");
-        String authorization = rc.request().getHeader("authorization");
 
         circuit.executeWithFallback(
             future -> {
-                postWithAuth("/api/cart/" + cartId + "/" + itemId + "/" + quantity, authorization)
+                client.post("/api/cart/" + cartId + "/" + itemId + "/" + quantity)
                     .as(BodyCodec.jsonObject())
                     .send(ar -> {
                         handleResponse(ar, rc, future);
@@ -52,11 +78,10 @@ public class CartHandler extends NordmartHandler
         String cartId = rc.request().getParam("cartId");
         String itemId = rc.request().getParam("itemId");
         String quantity = rc.request().getParam("quantity");
-        String authorization = rc.request().getHeader("authorization");
 
         circuit.executeWithFallback(
             future -> {
-                deleteWithAuth("/api/cart/" + cartId + "/" + itemId + "/" + quantity, authorization)
+                client.delete("/api/cart/" + cartId + "/" + itemId + "/" + quantity)
                     .as(BodyCodec.jsonObject())
                     .send(ar -> {
                         handleResponse(ar, rc, future);
@@ -69,7 +94,7 @@ public class CartHandler extends NordmartHandler
     {
         if (response.succeeded())
         {
-            rc.response().end(response.result().body().toString());
+            rc.response().setStatusCode(response.result().statusCode()).end(response.result().body().toString());
             future.complete();
         }
         else

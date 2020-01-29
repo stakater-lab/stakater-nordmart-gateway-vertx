@@ -40,6 +40,8 @@ public class NordmartRouter
         router.get("/health").handler(ctx -> ctx.response().end(new JsonObject().put("status", "UP").toString()));
         router.get("/api/products").handler(productHandler::products);
         router.get("/api/cart/:cartId").handler(cartHandler::getCart);
+        router.post("/api/cart/checkout/:cartId").handler(cartHandler::checkout);
+        router.post("/api/cart/:cartId/:tmpId").handler(cartHandler::setCart);
         router.post("/api/cart/:cartId/:itemId/:quantity").handler(cartHandler::addToCart);
         router.delete("/api/cart/:cartId/:itemId/:quantity").handler(cartHandler::deleteFromCart);
         router.get("/api/review/:productId").handler(reviewHandler::getReviews);
