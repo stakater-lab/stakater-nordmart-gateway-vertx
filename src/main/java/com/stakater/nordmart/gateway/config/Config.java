@@ -7,6 +7,7 @@ public class Config
     private Address inventoryAddress;
     private Address cartAddress;
     private Address reviewAddress;
+    private Address productSearchAddress;
     private Integer serverPort;
     private Boolean disableCartDiscovery;
 
@@ -26,6 +27,9 @@ public class Config
 
         config.customerAddress = new Address(System.getenv("CUSTOMER_API_HOST"),
                 System.getenv("CUSTOMER_API_PORT"));
+
+        config.productSearchAddress = new Address(System.getenv("PRODUCT_SEARCH_API_HOST"),
+                System.getenv("PRODUCT_SEARCH_API_PORT"));
 
         try
         {
@@ -69,5 +73,9 @@ public class Config
     public Boolean isDisableCartDiscovery()
     {
         return disableCartDiscovery;
+    }
+
+    public Address getProductSearchAddress() {
+        return productSearchAddress;
     }
 }
