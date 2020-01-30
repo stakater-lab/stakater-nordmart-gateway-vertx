@@ -5,6 +5,7 @@ import com.stakater.nordmart.gateway.client.ClientFactory;
 import com.stakater.nordmart.gateway.config.Config;
 import com.stakater.nordmart.gateway.handler.CartHandler;
 import com.stakater.nordmart.gateway.handler.ProductHandler;
+import com.stakater.nordmart.gateway.handler.ProductSearchHandler;
 import com.stakater.nordmart.gateway.handler.ReviewHandler;
 import com.stakater.nordmart.gateway.router.NordmartRouter;
 import io.vertx.circuitbreaker.CircuitBreakerOptions;
@@ -19,6 +20,7 @@ public class GatewayVerticle extends AbstractVerticle
     private final ProductHandler productHandler = new ProductHandler();
     private final CartHandler cartHandler = new CartHandler();
     private final ReviewHandler reviewHandler = new ReviewHandler();
+    private final ProductSearchHandler productSearchHandler = new ProductSearchHandler();
 
     @Override
     public void start()
@@ -35,19 +37,23 @@ public class GatewayVerticle extends AbstractVerticle
         productHandler.setCircuit(circuit);
         cartHandler.setCircuit(circuit);
         reviewHandler.setCircuit(circuit);
+        productSearchHandler.setCircuit(circuit);
 
-        Router router = new NordmartRouter(vertx, productHandler, cartHandler, reviewHandler).getRouter();
+        Router router = new NordmartRouter(vertx, productHandler, cartHandler, reviewHandler, productSearchHandler)
+                .getRouter();
 
         ServiceDiscovery.create(vertx, discovery -> {
             ClientFactory clientFactory = new ClientFactory(discovery, vertx, config);
             // Zip all 4 requests
             Single.zip(clientFactory.getCatalogClient(), clientFactory.getInventoryClient(),
-                clientFactory.getCartClient(), clientFactory.getReviewClient(), (c, i, ct, r) -> {
+                clientFactory.getCartClient(), clientFactory.getReviewClient(), clientFactory.getProductSearch(),
+                    (c, i, ct, r, ps) -> {
                 // When everything is done
                 productHandler.setClient(c);
                 productHandler.inventoryHandler.setClient(i);
                 cartHandler.setClient(ct);
                 reviewHandler.setClient(r);
+                productSearchHandler.setClient(ps);
                 return vertx.createHttpServer()
                     .requestHandler(router::accept)
                     .listen(config.getServerPort());
