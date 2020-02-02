@@ -4,6 +4,22 @@
 
 A maven vertx gateway application that aggregates API calls to backend services by providing a condensed REST API for front-end
 
+## Configurations
+
+Environment variables can be provided to configure the gateway.
+
+**Keycloak configurations**
+* CUSTOMER_API_HOST - Customer service API host.
+* CUSTOMER_API_PORT - Customer service API port.
+* CATALOG_API_HOST - Catalog service API host.
+* CATALOG_API_PORT - Catalog service API port.
+* INVENTORY_API_HOST - Inventory service API host.
+* INVENTORY_API_PORT - Inventory service API port.
+* DISABLE_CART_DISCOVERY - Configure discovery of the cart service.
+* CART_API_HOST - Cart service API host.
+* CART_API_PORT - Cart service API port.
+* HTTP_PORT - Port of the gateway service.
+
 ## Dependencies
 
 It requires following things to be installed:
@@ -46,7 +62,7 @@ To deploy app inside a docker container
 * Finally run the image by executing
 
   ```bash
-  docker run -d --name gateway --network nordmart-apps -p 8083:8080 -e CART_API_HOST=cart -e CART_API_PORT=8082 -e CATALOG_API_HOST=catalog -e CATALOG_API_PORT=8080 -e INVENTORY_API_HOST=inventory -e INVENTORY_API_PORT=8081 -e HTTP_PORT=8080 -e DISABLE_CART_DISCOVERY=false gateway
+  docker run -d --name gateway --network nordmart-apps -p 8083:8080 -e CART_API_HOST=cart -e CART_API_PORT=8082 -e CATALOG_API_HOST=catalog -e CATALOG_API_PORT=8080 -e INVENTORY_API_HOST=inventory -e INVENTORY_API_PORT=8081 -e CUSTOMER_API_HOST=customer -e CUSTOMER_API_PORT=8084 -e HTTP_PORT=8080 -e DISABLE_CART_DISCOVERY=false gateway
   ```
 
 ### Helm Charts

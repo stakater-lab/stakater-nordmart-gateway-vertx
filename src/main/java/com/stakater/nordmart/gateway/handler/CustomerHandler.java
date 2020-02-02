@@ -15,7 +15,7 @@ public class CustomerHandler extends NordmartHandler {
     private static final Logger LOG = LoggerFactory.getLogger(CustomerHandler.class);
 
     public void getByEmail(RoutingContext rc) {
-        LOG.info("Handling getByEmail request API");
+        LOG.debug("Handling getByEmail request API");
         HttpServerRequest request = rc.request();
         String customerEmail = request.getParam("email");
         String authorization = request.getHeader("authorization");
@@ -31,7 +31,7 @@ public class CustomerHandler extends NordmartHandler {
     }
 
     public void save(RoutingContext rc) {
-        LOG.info("Handling save customer request API");
+        LOG.debug("Handling save customer request API");
         String authorization = rc.request().getHeader("authorization");
 
         circuit.executeWithFallback(
@@ -43,7 +43,7 @@ public class CustomerHandler extends NordmartHandler {
     }
 
     public void update(RoutingContext rc) {
-        LOG.info("Handling update customer request API");
+        LOG.debug("Handling update customer request API");
         HttpServerRequest request = rc.request();
         String customerId = request.getParam("customerId");
         String authorization = request.getHeader("authorization");
@@ -64,7 +64,7 @@ public class CustomerHandler extends NordmartHandler {
     }
 
     private void onSuccess(RoutingContext rc, Future<JsonObject> future, HttpResponse<JsonObject> resp) {
-        LOG.info("Customer success response : {}", resp.statusCode());
+        LOG.debug("Customer success response : {}", resp.statusCode());
         rc.response().setStatusCode(resp.statusCode()).end(Json.encodePrettily(resp.body()));
         future.complete();
     }
