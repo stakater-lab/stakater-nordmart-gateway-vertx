@@ -8,7 +8,7 @@ A maven vertx gateway application that aggregates API calls to backend services 
 
 Environment variables can be provided to configure the gateway.
 
-**Keycloak configurations**
+**Service configurations**
 * CUSTOMER_API_HOST - Customer service API host.
 * CUSTOMER_API_PORT - Customer service API port.
 * CATALOG_API_HOST - Catalog service API host.
