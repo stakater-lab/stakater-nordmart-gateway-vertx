@@ -7,6 +7,10 @@ deployment:
     tag: v0.0.2
   imagePullSecrets: "docker-registry-nexus-secret"
   env:
+  - name: CUSTOMER_API_HOST
+    value: "customer.nordmart-store"
+  - name: CUSTOMER_API_PORT
+    value: "8080"
   - name: CATALOG_API_HOST
     value: "catalog.nordmart-store"
   - name: CATALOG_API_PORT

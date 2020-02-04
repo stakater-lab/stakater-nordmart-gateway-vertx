@@ -24,6 +24,13 @@ public class ClientFactory
         this.config = config;
     }
 
+    public Single<WebClient> getCustomerClient() {
+        return HttpEndpoint.rxGetWebClient(discovery, rec -> rec.getName().equals("customer"))
+                .onErrorReturn(t -> WebClient.create(vertx, new WebClientOptions()
+                        .setDefaultHost(config.getCustomerAddress().getHost())
+                        .setDefaultPort(config.getCustomerAddress().getPort())));
+    }
+
     public Single<WebClient> getCatalogClient() {
         return HttpEndpoint.rxGetWebClient(discovery, rec -> rec.getName().equals("catalog"))
             .onErrorReturn(t -> WebClient.create(vertx, new WebClientOptions()

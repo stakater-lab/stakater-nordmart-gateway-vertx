@@ -3,6 +3,7 @@ package com.stakater.nordmart.gateway.handler;
 import io.vertx.core.AsyncResult;
 import io.vertx.core.json.JsonObject;
 import io.vertx.rxjava.core.Future;
+import io.vertx.rxjava.core.http.HttpServerRequest;
 import io.vertx.rxjava.ext.web.RoutingContext;
 import io.vertx.rxjava.ext.web.client.HttpResponse;
 import io.vertx.rxjava.ext.web.codec.BodyCodec;
@@ -15,15 +16,45 @@ public class CartHandler extends NordmartHandler
 
     public void getCart(RoutingContext rc)
     {
-        String cartId = rc.request().getParam("cartId");
+        HttpServerRequest request = rc.request();
+        String cartId = request.getParam("cartId");
 
         circuit.executeWithFallback(
             future -> {
-                client.get("/api/cart/" + cartId).as(BodyCodec.jsonObject())
+                client.get("/api/cart/" + cartId)
+                    .as(BodyCodec.jsonObject())
                     .send(ar -> {
                         handleResponse(ar, rc, future);
                     });
             }, v -> new JsonObject());
+    }
+
+    public void checkout(RoutingContext rc) {
+        HttpServerRequest request = rc.request();
+        String cartId = request.getParam("cartId");
+        String authorization = rc.request().getHeader("authorization");
+
+        circuit.executeWithFallback(
+                future -> postWithAuth("/api/cart/checkout/" + cartId, authorization)
+                        .as(BodyCodec.jsonObject())
+                        .send(ar -> {
+                            handleResponse(ar, rc, future);
+                        })
+                , v -> new JsonObject());
+    }
+
+    public void setCart(RoutingContext rc) {
+        HttpServerRequest request = rc.request();
+        String cartId = request.getParam("cartId");
+        String tmpId = request.getParam("tmpId");
+
+        circuit.executeWithFallback(
+                future -> client.post("/api/cart/" + cartId + "/" + tmpId)
+                                .as(BodyCodec.jsonObject())
+                                .send(ar -> {
+                                    handleResponse(ar, rc, future);
+                                })
+                , v -> new JsonObject());
     }
 
     public void addToCart(RoutingContext rc)
@@ -63,7 +94,7 @@ public class CartHandler extends NordmartHandler
     {
         if (response.succeeded())
         {
-            rc.response().end(response.result().body().toString());
+            rc.response().setStatusCode(response.result().statusCode()).end(response.result().body().toString());
             future.complete();
         }
         else
