@@ -1,5 +1,5 @@
 #!/usr/bin/env groovy
-@Library('github.com/stakater/stakater-pipeline-library@v2.16.16') _
+@Library('github.com/stakater/stakater-pipeline-library@v2.16.17') _
 
 releaseApplication {
     appName = "gateway-vertx"
