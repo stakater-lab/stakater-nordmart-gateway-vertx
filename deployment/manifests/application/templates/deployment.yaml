@@ -1,0 +1,66 @@
+---
+# Source: application/templates/deployment.yaml
+
+apiVersion: apps/v1beta1
+kind: Deployment
+metadata:
+  labels:
+    app: gateway
+    group: com.stakater.platform
+    provider: stakater
+    version: "1.0.0"
+    chart: "application-0.0.12"
+    release: "RELEASE-NAME"
+    heritage: "Tiller"
+  annotations:
+    reloader.stakater.com/auto: "true"
+    
+  name: gateway
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: gateway
+        group: com.stakater.platform
+        provider: stakater
+        version: "1.0.0"
+        chart: "application-0.0.12"
+        release: "RELEASE-NAME"
+        heritage: "Tiller"
+        app: gateway
+        
+    spec:      
+      imagePullSecrets:
+      - name: docker-registry-nexus-secret
+      containers:
+      - name: gateway
+        image: "docker.release.stakater.com:443/stakater/gateway:v0.0.2"
+        imagePullPolicy: IfNotPresent
+        env:
+          - name: CUSTOMER_API_HOST
+            value: customer.nordmart-store
+          - name: CUSTOMER_API_PORT
+            value: "8080"
+          - name: CATALOG_API_HOST
+            value: catalog.nordmart-store
+          - name: CATALOG_API_PORT
+            value: "8080"
+          - name: INVENTROY_API_HOST
+            value: inventory.nordmart-store
+          - name: INVENTROY_API_PORT
+            value: "8080"
+          - name: DISABLE_CART_DISCOVERY
+            value: "false"
+          - name: CART_API_HOST
+            value: cart.nordmart-store
+          - name: CART_API_PORT
+            value: "8080"
+          - name: PRODUCT_SEARCH_API_HOST
+            value: search.nordmart-dev-apps
+          - name: PRODUCT_SEARCH_API_PORT
+            value: "8080"
+          - name: HTTP_PORT
+            value: "8080"
+          
+      serviceAccountName: default        
