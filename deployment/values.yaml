@@ -3,7 +3,7 @@ deployment:
   podLabels:
     app: gateway
   image:
-    repository: stakater/gateway-vertx
+    repository: stakater/stakater-nordmart-gateway-vertx
     tag: v0.0.1
   env:
   - name: CUSTOMER_API_HOST
