@@ -40,7 +40,7 @@ ingress:
   enabled: false
   servicePort: 8080
   hosts:
-    - gateway-vertx-dev.DOMAIN
+    - gateway-dev.DOMAIN
   annotations:
     # kubernetes.io/ingress.class: external-ingress
     # ingress.kubernetes.io/rewrite-target: /
