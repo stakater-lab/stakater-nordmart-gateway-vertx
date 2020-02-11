@@ -3,30 +3,29 @@ deployment:
   podLabels:
     app: gateway
   image:
-    repository: docker.release.stakater.com:443/stakater/gateway
-    tag: v0.0.2
-  imagePullSecrets: "docker-registry-nexus-secret"
+    repository: stakater/gateway-vertx
+    tag: v0.0.1
   env:
   - name: CUSTOMER_API_HOST
-    value: "customer.nordmart-store"
+    value: "customer"
   - name: CUSTOMER_API_PORT
     value: "8080"
   - name: CATALOG_API_HOST
-    value: "catalog.nordmart-store"
+    value: "catalog"
   - name: CATALOG_API_PORT
     value: "8080"
   - name: INVENTROY_API_HOST
-    value: "inventory.nordmart-store"
+    value: "inventory"
   - name: INVENTROY_API_PORT
     value: "8080"
   - name: DISABLE_CART_DISCOVERY
     value: "false"
   - name: CART_API_HOST
-    value: "cart.nordmart-store"
+    value: "cart"
   - name: CART_API_PORT
     value: "8080"
   - name: PRODUCT_SEARCH_API_HOST
-    value: "search.nordmart-dev-apps"
+    value: "search"
   - name: PRODUCT_SEARCH_API_PORT
     value: "8080"
   - name: HTTP_PORT
@@ -36,3 +35,18 @@ rbac:
   serviceAccount:
     name: default
 configMap: {}
+
+ingress:
+  enabled: false
+  servicePort: 8080
+  hosts:
+    - gateway-vertx-dev.DOMAIN
+  annotations:
+    # kubernetes.io/ingress.class: external-ingress
+    # ingress.kubernetes.io/rewrite-target: /
+    # ingress.kubernetes.io/force-ssl-redirect: true
+  tls:
+    # Secrets must be manually created in the namespace.
+    # - secretName: chart-example-tls
+    #   hosts:
+    #     - chart-example.local
