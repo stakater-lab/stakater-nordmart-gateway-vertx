@@ -15,7 +15,7 @@ releaseApplication {
     serviceAccount = "jenkins"
     dockerRepositoryURL = 'docker.delivery.stakater.com:443'
     // configuration parameter for e2e tess
-    e2eTestJob = "true"
+    e2eTestJob = true
     e2eJobName = "../stakater-nordmart-e2e-tests/master"
     // configuration for generating kubernetes manifests
     kubernetesGenerateManifests = true
