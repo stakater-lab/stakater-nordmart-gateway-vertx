@@ -59,17 +59,20 @@ service:
   - port: 8080
     name: https
     targetPort: 8080
-ingress:
-  enabled: false
-  servicePort: 8080
-  hosts:
-    - gateway-NAMEPSACE.DOMAIN
-  annotations:
-    # kubernetes.io/ingress.class: external-ingress
-    # ingress.kubernetes.io/rewrite-target: /
-    # ingress.kubernetes.io/force-ssl-redirect: true
-  tls:
-    # Secrets must be manually created in the namespace.
-    # - secretName: chart-example-tls
-    #   hosts:
-    #     - chart-example.local
+  additionalLabels:
+    expose: "true"
+    annotations:
+      config.xposer.stakater.com/Domain: DOMAIN
+      config.xposer.stakater.com/IngressNameTemplate: '{{.Service}}'
+      config.xposer.stakater.com/IngressURLTemplate: '{{.Service}}-{{.Namespace}}.{{.Domain}}'
+      config.xposer.stakater.com/TLS: 'true'
+      config.xposer.stakater.com/TLSSecretNameTemplate: "tls-cert"
+      xposer.stakater.com/annotations: |-
+        kubernetes.io/ingress.class: external-ingress
+        forecastle.stakater.com/expose: true
+        forecastle.stakater.com/icon: https://github.com/stakater/ForecastleIcons/raw/master/stakater.png
+        forecastle.stakater.com/appName: Gateway-NAMESPACE
+        forecastle.stakater.com/group: Nordmart
+        monitor.stakater.com/enabled: true
+        ingress.kubernetes.io/force-ssl-redirect: true
+        exposeIngressUrl: locally
