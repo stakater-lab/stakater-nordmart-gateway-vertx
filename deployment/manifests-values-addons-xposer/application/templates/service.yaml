@@ -1,0 +1,41 @@
+---
+# Source: application/templates/service.yaml
+
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: gateway
+    group: com.stakater.platform
+    provider: stakater
+    version: "1.0.0"
+    chart: "application-0.0.12"
+    release: "RELEASE-NAME"
+    heritage: "Tiller"
+    annotations:
+      config.xposer.stakater.com/Domain: DOMAIN
+      config.xposer.stakater.com/IngressNameTemplate: '{{.Service}}'
+      config.xposer.stakater.com/IngressURLTemplate: '{{.Service}}-{{.Namespace}}.{{.Domain}}'
+      config.xposer.stakater.com/TLS: "true"
+      config.xposer.stakater.com/TLSSecretNameTemplate: tls-cert
+      xposer.stakater.com/annotations: |-
+        kubernetes.io/ingress.class: external-ingress
+        forecastle.stakater.com/expose: true
+        forecastle.stakater.com/icon: https://github.com/stakater/ForecastleIcons/raw/master/stakater.png
+        forecastle.stakater.com/appName: Gateway-NAMESPACE
+        forecastle.stakater.com/group: Nordmart
+        monitor.stakater.com/enabled: true
+        ingress.kubernetes.io/force-ssl-redirect: true
+        exposeIngressUrl: locally
+    expose: "true"
+    
+  name: gateway
+spec:
+  selector:
+    app: gateway
+    
+  ports:
+    - name: https
+      port: 8080
+      targetPort: 8080
+    
