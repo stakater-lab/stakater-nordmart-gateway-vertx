@@ -60,7 +60,7 @@ service:
     name: https
     targetPort: 8080
 ingress:
-  enabled: false
+  enabled: true
   servicePort: 8080
   hosts:
     - gateway-NAMESPACE.DOMAIN
@@ -69,11 +69,10 @@ ingress:
     forecastle.stakater.com/icon: https://github.com/stakater/ForecastleIcons/raw/master/stakater.png
     forecastle.stakater.com/appName: Gateway-NAMESPACE
     forecastle.stakater.com/group: Nordmart
-    kubernetes.io/ingress.class: Nordmart
     monitor.stakater.com/enabled: true
-    # kubernetes.io/ingress.class: external-ingress
-    # ingress.kubernetes.io/rewrite-target: /
-    # ingress.kubernetes.io/force-ssl-redirect: true
+    kubernetes.io/ingress.class: external-ingress
+    ingress.kubernetes.io/rewrite-target: /
+    ingress.kubernetes.io/force-ssl-redirect: true
   tls:
     # Secrets must be manually created in the namespace.
     # - secretName: chart-example-tls
