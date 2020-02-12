@@ -59,6 +59,24 @@ service:
   - port: 8080
     name: https
     targetPort: 8080
+  additionalLabels:
+    expose: "true"
+    annotations:
+      config.xposer.stakater.com/Domain: DOMAIN
+      config.xposer.stakater.com/IngressNameTemplate: '{{.Service}}-dev'
+      config.xposer.stakater.com/IngressURLTemplate: '{{.Service}}-dev.{{.Domain}}'
+      config.xposer.stakater.com/TLS: 'true'
+      config.xposer.stakater.com/TLSSecretNameTemplate: "tls-cert"
+      xposer.stakater.com/annotations: |-
+        kubernetes.io/ingress.class: external-ingress
+        forecastle.stakater.com/expose: true
+        forecastle.stakater.com/icon: https://github.com/stakater/ForecastleIcons/raw/master/stakater.png
+        forecastle.stakater.com/appName: Gateway-dev
+        forecastle.stakater.com/group: Nordmart
+        kubernetes.io/ingress.class: Nordmart
+        monitor.stakater.com/enabled: true
+        ingress.kubernetes.io/force-ssl-redirect: true
+        exposeIngressUrl: locally
 ingress:
   enabled: false
   servicePort: 8080
