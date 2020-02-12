@@ -63,7 +63,7 @@ ingress:
   enabled: false
   servicePort: 8080
   hosts:
-    - gateway-dev.DOMAIN
+    - gateway-NAMEPSACE.DOMAIN
   annotations:
     # kubernetes.io/ingress.class: external-ingress
     # ingress.kubernetes.io/rewrite-target: /
