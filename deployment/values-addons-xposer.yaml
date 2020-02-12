@@ -50,9 +50,9 @@ deployment:
   - name: HTTP_PORT
     value: "8080"
 rbac:
-  create: false
+  create: true
   serviceAccount:
-    name: default
+    create: true
 configMap: {}
 service:
   ports:
