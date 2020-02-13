@@ -47,6 +47,10 @@ deployment:
     value: "search"
   - name: PRODUCT_SEARCH_API_PORT
     value: "8080"
+  - name: REVIEW_API_HOST
+    value: review
+    - name: REVIEW_API_PORT
+      value: "8080"
   - name: HTTP_PORT
     value: "8080"
 rbac:
