@@ -9,7 +9,7 @@ metadata:
     group: com.stakater.platform
     provider: stakater
     version: "1.0.0"
-    chart: "application-0.0.12"
+    chart: "application-0.0.13"
     release: "RELEASE-NAME"
     heritage: "Tiller"
   name: gateway
@@ -24,7 +24,7 @@ metadata:
     group: com.stakater.platform
     provider: stakater
     version: "1.0.0"
-    chart: "application-0.0.12"
+    chart: "application-0.0.13"
     release: "RELEASE-NAME"
     heritage: "Tiller"
   name: gateway
@@ -48,7 +48,7 @@ metadata:
     group: com.stakater.platform
     provider: stakater
     version: "1.0.0"
-    chart: "application-0.0.12"
+    chart: "application-0.0.13"
     release: "RELEASE-NAME"
     heritage: "Tiller"
   annotations:
@@ -64,7 +64,7 @@ spec:
         group: com.stakater.platform
         provider: stakater
         version: "1.0.0"
-        chart: "application-0.0.12"
+        chart: "application-0.0.13"
         release: "RELEASE-NAME"
         heritage: "Tiller"
         app: gateway
@@ -131,7 +131,7 @@ metadata:
     group: com.stakater.platform
     provider: stakater
     version: "1.0.0"
-    chart: "application-0.0.12"
+    chart: "application-0.0.13"
     release: "RELEASE-NAME"
     heritage: "Tiller"
   annotations:
@@ -143,7 +143,8 @@ metadata:
     ingress.kubernetes.io/rewrite-target: /
     kubernetes.io/ingress.class: external-ingress
     monitor.stakater.com/enabled: true
-    spec:
+    
+spec:
   rules:
     - host: gateway-NAMESPACE.DOMAIN
       http:
