@@ -21,6 +21,6 @@ releaseApplication {
     kubernetesGenerateManifests = true
     kubernetesPublicChartRepositoryURL = "https://stakater.github.io/stakater-charts"
     kubernetesChartName = "stakater/application"
-    kubernetesChartVersion = "0.0.12"
+    kubernetesChartVersion = "0.0.13"
     kubernetesNamespace = "NAMESPACE"
 }
