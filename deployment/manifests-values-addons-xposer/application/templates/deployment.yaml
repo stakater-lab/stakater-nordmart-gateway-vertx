@@ -10,7 +10,7 @@ metadata:
     provider: stakater
     version: "1.0.0"
     chart: "application-0.0.13"
-    release: "RELEASE-NAME"
+    release: "NAMESPACE_NAME-gateway-vertx"
     heritage: "Tiller"
   annotations:
     reloader.stakater.com/auto: "true"
@@ -26,7 +26,7 @@ spec:
         provider: stakater
         version: "1.0.0"
         chart: "application-0.0.13"
-        release: "RELEASE-NAME"
+        release: "NAMESPACE_NAME-gateway-vertx"
         heritage: "Tiller"
         app: gateway
         
