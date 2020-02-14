@@ -1,5 +1,5 @@
 #!/usr/bin/env groovy
-@Library('github.com/stakater/stakater-pipeline-library@v2.16.17') _
+@Library('github.com/stakater/stakater-pipeline-library@v2.16.18') _
 
 releaseApplication {
     appName = "gateway-vertx"
@@ -22,5 +22,5 @@ releaseApplication {
     kubernetesPublicChartRepositoryURL = "https://stakater.github.io/stakater-charts"
     kubernetesChartName = "stakater/application"
     kubernetesChartVersion = "0.0.13"
-    kubernetesNamespace = "NAMESPACE"
+    kubernetesNamespace = "NAMESPACE_NAME"
 }
