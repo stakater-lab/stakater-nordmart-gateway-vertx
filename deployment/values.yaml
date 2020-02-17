@@ -1,5 +1,7 @@
 applicationName: "gateway"
 deployment:
+  additionalLabels:
+    appCategory: "backend"
   podLabels:
     app: gateway
   probes:
