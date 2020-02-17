@@ -33,9 +33,9 @@ deployment:
     value: "catalog"
   - name: CATALOG_API_PORT
     value: "8080"
-  - name: INVENTROY_API_HOST
+  - name: INVENTORY_API_HOST
     value: "inventory"
-  - name: INVENTROY_API_PORT
+  - name: INVENTORY_API_PORT
     value: "8080"
   - name: DISABLE_CART_DISCOVERY
     value: "false"
@@ -48,7 +48,7 @@ deployment:
   - name: PRODUCT_SEARCH_API_PORT
     value: "8080"
   - name: REVIEW_API_HOST
-    value: review
+    value: "review"
   - name: REVIEW_API_PORT
     value: "8080"
   - name: HTTP_PORT
