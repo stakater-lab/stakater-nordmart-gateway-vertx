@@ -12,6 +12,8 @@ metadata:
     chart: "application-0.0.13"
     release: "NAMESPACE_NAME-gateway-vertx"
     heritage: "Tiller"
+    appCategory: backend
+    
   annotations:
     reloader.stakater.com/auto: "true"
     

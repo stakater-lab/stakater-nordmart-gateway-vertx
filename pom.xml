@@ -5,7 +5,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.stakater.nordmart</groupId>
     <artifactId>gateway</artifactId>
-    <version>v0.0.26</version>
+    <version>v0.0.27</version>
     <packaging>jar</packaging>
     <name>Nordmart Gateway Service</name>
     <description>Nordmart Gateway Service with Eclipse Vert.x</description>
