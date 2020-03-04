@@ -58,7 +58,7 @@ deployment:
 rbac:
   create: true
   serviceAccount:
-    create: true
+    name: "default"
 configMap: {}
 service:
   ports:
