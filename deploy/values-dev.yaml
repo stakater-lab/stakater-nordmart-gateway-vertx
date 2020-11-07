@@ -1,0 +1,102 @@
+applicationName: "gateway-vertx"
+
+labels:
+  group: com.stakater
+  team: nordmart
+
+deployment:
+  replicas: 2
+  volumes: []
+  volumeMounts: []
+  securityContext: []
+  podLabels: []
+  additionalPodAnnotations:
+    app: "gateway-vertx"
+    team: "nordmart"
+  image:
+    repository: DOCKER_REPOSITORY_URL
+    tag: IMAGE_TAG
+  env:
+  - name: CUSTOMER_API_HOST
+    value: "customer"
+  - name: CUSTOMER_API_PORT
+    value: "8080"
+  - name: CATALOG_API_HOST
+    value: "catalog"
+  - name: CATALOG_API_PORT
+    value: "8080"
+  - name: INVENTORY_API_HOST
+    value: "inventory"
+  - name: INVENTORY_API_PORT
+    value: "8080"
+  - name: CART_API_HOST
+    value: "cart"
+  - name: CART_API_PORT
+    value: "8080"
+  - name: DISABLE_CART_DISCOVERY
+    value: "false"    
+  - name: PRODUCT_SEARCH_API_HOST
+    value: "search"
+  - name: PRODUCT_SEARCH_API_PORT
+    value: "8080"
+  - name: REVIEW_API_HOST
+    value: "review"
+  - name: REVIEW_API_PORT
+    value: "8080"
+  - name: HTTP_PORT
+    value: "8080"
+  probes:
+    readinessProbe:
+      failureThreshold: 3
+      periodSeconds: 60
+      successThreshold: 1
+      timeoutSeconds: 1
+      initialDelaySeconds: 15
+      httpGet:
+        path: /actuator/health
+        port: 8080
+    livenessProbe:
+      failureThreshold: 3
+      periodSeconds: 60
+      successThreshold: 1
+      timeoutSeconds: 1
+      initialDelaySeconds: 15
+      httpGet:
+        path: /actuator/health
+        port: 8080
+
+# Role based access control
+rbac:
+  enabled: true
+  serviceAccount:
+    enabled: true
+
+# Service configuration
+service:
+  ports:
+  - port: 8080
+    name: http
+    targetPort: 8080
+
+# Openshift route
+route:
+  enabled: true
+  annotations: []
+  additionalLabels: 
+    router: default
+  port:
+    targetPort: http
+  wildcardPolicy: None
+  tls:
+    termination: edge
+    insecureEdgeTerminationPolicy: Redirect
+
+# Service monitor to collect prometheus metrices
+serviceMonitor:
+  enabled: true
+  
+  # List of the endpoints of service from which prometheus will scrape data
+  endpoints:
+  - interval: 5s
+    path: /prometheus
+    port: http
