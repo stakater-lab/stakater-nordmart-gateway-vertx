@@ -1,0 +1,75 @@
+application:
+  applicationName: "gateway"
+  deployment:
+    imagePullSecrets: nexus-creds
+    additionalLabels:
+      appCategory: "backend"
+    annotations:
+    volumes: {}
+    image:
+      repository: stakater/stakater-nordmart-gateway-vertx
+      tag: v0.0.1
+    env:
+    - name: CUSTOMER_API_HOST
+      value: "customer"
+    - name: CUSTOMER_API_PORT
+      value: "8080"
+    - name: CATALOG_API_HOST
+      value: "catalog"
+    - name: CATALOG_API_PORT
+      value: "8080"
+    - name: INVENTORY_API_HOST
+      value: "inventory"
+    - name: INVENTORY_API_PORT
+      value: "8080"
+    - name: DISABLE_CART_DISCOVERY
+      value: "false"
+    - name: CART_API_HOST
+      value: "cart"
+    - name: CART_API_PORT
+      value: "8080"
+    - name: PRODUCT_SEARCH_API_HOST
+      value: "search"
+    - name: PRODUCT_SEARCH_API_PORT
+      value: "8080"
+    - name: REVIEW_API_HOST
+      value: "review"
+    - name: REVIEW_API_PORT
+      value: "8080"
+    - name: HTTP_PORT
+      value: "8080"
+  
+    probes:
+      readinessProbe:
+        failureThreshold: 3
+        periodSeconds: 10
+        successThreshold: 1
+        timeoutSeconds: 1
+        initialDelaySeconds: 10
+        httpGet:
+          path: /health
+          port: 8080
+      livenessProbe:
+        failureThreshold: 3
+        periodSeconds: 10
+        successThreshold: 1
+        timeoutSeconds: 1
+        initialDelaySeconds: 10
+        httpGet:
+          path: /health
+          port: 8080
+  service:
+    ports:
+    - port: 8080
+      name: https
+      targetPort: 8080
+  rbac:
+    create: true
+    serviceAccount:
+      create: true
+      enabled: true
+  configMap:
+   enabled: false
+  route:
+    enabled: true
+ 
