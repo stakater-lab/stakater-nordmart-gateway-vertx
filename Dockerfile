@@ -23,6 +23,8 @@ EXPOSE 8080
 # NOTE we assume there's only 1 jar in the target dir
 COPY --from=build /usr/src/app/target/*.jar $HOME/artifacts/app.jar
 
+USER root
+
 RUN chown -R 1001:0 $HOME
 
 USER 1001
