@@ -61,7 +61,7 @@ application:
   service:
     ports:
     - port: 8080
-      name: https
+      name: http
       targetPort: 8080
   rbac:
     create: true
