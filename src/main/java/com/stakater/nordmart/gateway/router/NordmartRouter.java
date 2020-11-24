@@ -5,6 +5,7 @@ import com.stakater.nordmart.gateway.handler.CustomerHandler;
 import com.stakater.nordmart.gateway.handler.ProductHandler;
 import com.stakater.nordmart.gateway.handler.ProductSearchHandler;
 import com.stakater.nordmart.gateway.handler.ReviewHandler;
+import com.stakater.nordmart.gateway.handler.PromotionHandler;
 import io.vertx.core.AbstractVerticle;
 import io.vertx.core.http.HttpMethod;
 import io.vertx.core.json.JsonObject;
@@ -18,7 +19,8 @@ public class NordmartRouter
     private Router router;
 
     public NordmartRouter(Vertx vertex, CustomerHandler customerHandler, ProductHandler productHandler,
-                          CartHandler cartHandler, ReviewHandler reviewHandler, ProductSearchHandler productSearchHandler)
+                          CartHandler cartHandler, ReviewHandler reviewHandler, 
+                          ProductSearchHandler productSearchHandler, PromotionHandler promotionHandler)
     {
         router = Router.router(vertex);
         router.route().handler(CorsHandler.create("*")
@@ -47,6 +49,7 @@ public class NordmartRouter
         router.post("/api/cart/:cartId/:tmpId").handler(cartHandler::setCart);
         router.post("/api/cart/:cartId/:itemId/:quantity").handler(cartHandler::addToCart);
         router.delete("/api/cart/:cartId/:itemId/:quantity").handler(cartHandler::deleteFromCart);
+        router.get("/api/promotion/:itemId").handler(promotionHandler::getPromotions);
         router.get("/api/review/:productId").handler(reviewHandler::getReviews);
         router.post("/api/review/:productId/:customerName/:rating/:text").handler(reviewHandler::addReview);
         router.delete("/api/review/:reviewId").handler(reviewHandler::deleteReview);

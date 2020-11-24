@@ -62,6 +62,14 @@ public class ClientFactory
                         .setDefaultPort(config.getProductSearchAddress().getPort())));
     }
 
+    public Single<WebClient> getPromotionClient() {
+        return HttpEndpoint.rxGetWebClient(discovery,
+                rec -> rec.getName().equals("promotion"))
+                .onErrorReturn(t -> WebClient.create(vertx, new WebClientOptions()
+                        .setDefaultHost(config.getPromotionAddress().getHost())
+                        .setDefaultPort(config.getPromotionAddress().getPort())));
+    }
+
     public Single<WebClient> getCartClient() {
         // Cart lookup
         Single<WebClient> cartDiscoveryRequest;
