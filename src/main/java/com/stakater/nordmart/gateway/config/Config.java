@@ -8,6 +8,7 @@ public class Config
     private Address cartAddress;
     private Address reviewAddress;
     private Address productSearchAddress;
+    private Address promotionAddress;
     private Integer serverPort;
     private Boolean disableCartDiscovery;
 
@@ -30,6 +31,10 @@ public class Config
 
         config.productSearchAddress = new Address(System.getenv("PRODUCT_SEARCH_API_HOST"),
                 System.getenv("PRODUCT_SEARCH_API_PORT"));
+
+        config.promotionAddress = new Address(System.getenv("PROMOTION_API_HOST"),
+                System.getenv("PROMOTION_API_PORT"));
+
 
         try
         {
@@ -77,5 +82,10 @@ public class Config
 
     public Address getProductSearchAddress() {
         return productSearchAddress;
+    }
+
+    public Address getPromotionAddress()
+    {
+        return promotionAddress;
     }
 }
