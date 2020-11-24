@@ -52,7 +52,7 @@ public class GatewayVerticle extends AbstractVerticle
             ClientFactory clientFactory = new ClientFactory(discovery, vertx, config);
             // Zip all 4 requests
             Single.zip(clientFactory.getCustomerClient(), clientFactory.getCatalogClient(), clientFactory.getInventoryClient(),
-                clientFactory.getCartClient(), clientFactory.getReviewClient(), clientFactory.getProductSearch(), (z, c, i, ct, r, ps, pr) -> {
+                clientFactory.getCartClient(), clientFactory.getReviewClient(), clientFactory.getProductSearch(), clientFactory.getPromotionClient(), (z, c, i, ct, r, ps, pr) -> {
                 // When everything is done
                 customerHandler.setClient(z);
                 productHandler.setClient(c);
