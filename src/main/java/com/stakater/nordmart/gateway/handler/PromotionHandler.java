@@ -20,7 +20,7 @@ public class PromotionHandler extends NordmartHandler
 
         circuit.executeWithFallback(
                 future -> {
-                    client.get("/promotion/" + itemId).as(BodyCodec.jsonObject())
+                    client.get("/promotions/" + itemId).as(BodyCodec.jsonObject())
                             .send(ar -> {
                                 handleResponse(ar, rc, future);
                             });
