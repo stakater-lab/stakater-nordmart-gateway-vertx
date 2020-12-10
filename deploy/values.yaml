@@ -1,7 +1,7 @@
 application:
   applicationName: "gateway"
   deployment:
-    imagePullSecrets: nexus-creds
+    imagePullSecrets: nexus-docker-config-forked
     additionalLabels:
       appCategory: "backend"
     annotations:
@@ -11,33 +11,33 @@ application:
       tag: v0.0.1
     env:
     - name: CUSTOMER_API_HOST
-      value: "customer"
+      value: "customer.gabbar-dev.svc.cluster.local"
     - name: CUSTOMER_API_PORT
       value: "8080"
     - name: CATALOG_API_HOST
-      value: "catalog"
+      value: "catalog.gabbar-dev.svc.cluster.local"
     - name: CATALOG_API_PORT
       value: "8080"
     - name: INVENTORY_API_HOST
-      value: "inventory"
+      value: "inventory.gabbar-dev.svc.cluster.local"
     - name: INVENTORY_API_PORT
       value: "8080"
     - name: DISABLE_CART_DISCOVERY
       value: "false"
     - name: CART_API_HOST
-      value: "cart"
+      value: "cart.gabbar-dev.svc.cluster.local"
     - name: CART_API_PORT
       value: "8080"
     - name: PRODUCT_SEARCH_API_HOST
-      value: "search"
+      value: "search.gabbar-dev.svc.cluster.local"
     - name: PRODUCT_SEARCH_API_PORT
       value: "8080"
     - name: REVIEW_API_HOST
-      value: "review"
+      value: "review.gabbar-dev.svc.cluster.local"
     - name: REVIEW_API_PORT
       value: "8080"
     - name: PROMOTION_API_HOST
-      value: "promotion"  
+      value: "promotion.gabbar-dev.svc.cluster.local"  
     - name: PROMOTION_API_PORT
       value: "8080"       
     - name: HTTP_PORT
