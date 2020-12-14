@@ -1,4 +1,6 @@
 target/
+**/Chart.lock
+**/chart/*
 .idea/
 gateway.iml
 chart/

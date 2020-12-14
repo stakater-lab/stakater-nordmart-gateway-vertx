@@ -1,5 +1,27 @@
 application:
   applicationName: "gateway"
+  configMap:
+    enabled: true
+    files:
+    - nameSuffix: ""
+      data:
+        CUSTOMER_API_HOST: "customer.gabbar-dev.svc.cluster.local"
+        CUSTOMER_API_PORT: "8080"
+        CATALOG_API_HOST: "catalog.gabbar-dev.svc.cluster.local"
+        CATALOG_API_PORT: "8080"
+        INVENTORY_API_HOST: "inventory.gabbar-dev.svc.cluster.local"
+        INVENTORY_API_PORT: "8080"
+        DISABLE_CART_DISCOVERY: "false"
+        CART_API_HOST: "cart.gabbar-dev.svc.cluster.local"
+        CART_API_PORT: "8080"
+        PRODUCT_SEARCH_API_HOST: "search.gabbar-dev.svc.cluster.local"
+        PRODUCT_SEARCH_API_PORT: "8080"
+        REVIEW_API_HOST: "review.gabbar-dev.svc.cluster.local"
+        REVIEW_API_PORT: "8080"
+        PROMOTION_API_HOST: "promotion.gabbar-dev.svc.cluster.local"  
+        PROMOTION_API_PORT: "8080"  
+        HTTP_PORT: "8080"
+        JAEGER_ENDPOINT: "http://jaeger-collector.istio-system:14268/api/traces"
   deployment:
     imagePullSecrets: nexus-docker-config-forked
     additionalLabels:
@@ -9,40 +31,9 @@ application:
     image:
       repository: stakater/stakater-nordmart-gateway-vertx
       tag: v0.0.1
-    env:
-    - name: CUSTOMER_API_HOST
-      value: "customer.gabbar-dev.svc.cluster.local"
-    - name: CUSTOMER_API_PORT
-      value: "8080"
-    - name: CATALOG_API_HOST
-      value: "catalog.gabbar-dev.svc.cluster.local"
-    - name: CATALOG_API_PORT
-      value: "8080"
-    - name: INVENTORY_API_HOST
-      value: "inventory.gabbar-dev.svc.cluster.local"
-    - name: INVENTORY_API_PORT
-      value: "8080"
-    - name: DISABLE_CART_DISCOVERY
-      value: "false"
-    - name: CART_API_HOST
-      value: "cart.gabbar-dev.svc.cluster.local"
-    - name: CART_API_PORT
-      value: "8080"
-    - name: PRODUCT_SEARCH_API_HOST
-      value: "search.gabbar-dev.svc.cluster.local"
-    - name: PRODUCT_SEARCH_API_PORT
-      value: "8080"
-    - name: REVIEW_API_HOST
-      value: "review.gabbar-dev.svc.cluster.local"
-    - name: REVIEW_API_PORT
-      value: "8080"
-    - name: PROMOTION_API_HOST
-      value: "promotion.gabbar-dev.svc.cluster.local"  
-    - name: PROMOTION_API_PORT
-      value: "8080"       
-    - name: HTTP_PORT
-      value: "8080"
-  
+    envFrom:
+    - type: configmap
+      name: ""    
     probes:
       readinessProbe:
         failureThreshold: 3
@@ -72,8 +63,6 @@ application:
     serviceAccount:
       create: true
       enabled: true
-  configMap:
-   enabled: false
   route:
     enabled: true
  
